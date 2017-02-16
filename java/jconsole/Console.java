@@ -1,11 +1,11 @@
 package jconsole;
 
 /**
- * This class provides platform-independend access to lowlevel console functions.
+ * This class provides platform-independent access to lowlevel console functions.
  *
  * <p>The underlying library is initialized automatically after the class has been loaded,
  * but should be manually deinitialized using {@link #shutdown()} to
- * return the console to its orignal operating mode.</p>
+ * return the console to its original operating mode.</p>
  *
  * @author Henri Heimann
  * @version 0.1
@@ -31,7 +31,7 @@ public final class Console
 	private static native void initialize();
 
     /**
-     * Deintializes the native libray and return the console to its orginal operating mode.
+     * Deinitializes the native library and return the console to its original operating mode.
      */
 	public static native void shutdown();
 
@@ -48,7 +48,7 @@ public final class Console
 	public static native void print(String text);
 
     /**
-     * Sets the visiblity of the cursor. A visible cursor may be represented differently
+     * Sets the visibility of the cursor. A visible cursor may be represented differently
      * on different platforms.
      * @param show      true to show the cursor, false to hide it
      */
