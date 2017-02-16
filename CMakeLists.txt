@@ -15,10 +15,10 @@ endif()
 
 if (CURSES_FOUND)
     message(STATUS "Using Curses.")
-    set(SOURCE_FILES native/jconsole_Console_Curses.c)
+    set(SOURCE_FILES src/native/jconsole_Console_Curses.c)
 elseif(WIN32_INCLUDE_DIR)
     message(STATUS "Using WinAPI.")
-    set(SOURCE_FILES native/jconsole_Console_WinAPI.c)
+    set(SOURCE_FILES src/native/jconsole_Console_WinAPI.c)
 else()
     message(FATAL_ERROR "Unable to find Curses or WinAPI.")
 endif()
@@ -26,18 +26,18 @@ endif()
 add_custom_target(
     jconsole-java-classes
     COMMAND ${JAVA_COMPILE} -d ${CMAKE_CURRENT_BINARY_DIR} jconsole/Console.java
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/java
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 add_custom_target(
     jconsole-java-doc
     COMMAND ${Java_JAVADOC_EXECUTABLE} -d ${CMAKE_CURRENT_SOURCE_DIR}/doc jconsole
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/java
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 add_custom_target(
     jconsole-javah
-    COMMAND ${JNI_JAVAH} -jni -d ${CMAKE_CURRENT_SOURCE_DIR}/native -classpath ${CMAKE_CURRENT_BINARY_DIR} jconsole.Console
+    COMMAND ${JNI_JAVAH} -jni -d src/native -classpath ${CMAKE_CURRENT_BINARY_DIR} jconsole.Console
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
