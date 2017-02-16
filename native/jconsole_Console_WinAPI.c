@@ -13,8 +13,8 @@ JNIEXPORT void JNICALL Java_jconsole_Console_initialize(JNIEnv *env, jclass clas
 	SetConsoleOutputCP(CP_UTF8);
 
 	DWORD mode = 0;
-    GetConsoleMode(hStdin, &mode);
-    SetConsoleMode(hStdin, mode & ~(ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT));
+	GetConsoleMode(hStdin, &mode);
+	SetConsoleMode(hStdin, mode & ~(ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT));
 }
 
 JNIEXPORT void JNICALL Java_jconsole_Console_shutdown(JNIEnv *env, jclass class)
