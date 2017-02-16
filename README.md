@@ -1,6 +1,6 @@
 # JConsole
 
-A library that provides platform-independent access to lowlevel console functions using native access to curses on Linux and OS-X, and the Windows API on Windows.
+A library that provides platform-independent access to lowlevel console functions using native access to Curses on Linux and OS-X, and the Windows API on Windows.
 
 ## Usage
 
@@ -8,7 +8,8 @@ Prebuild binaries are available in the lib directory. The platform's correspondi
 
 ## Build
 
-Building the project requires a CMake installation and a Curses library on Unix and OS-X systems. To build the project use to commands:
+Building the project requires a CMake installation and a Curses library on Unix and OS-X systems. To build the project use the commands:
+
 ```
 mkdir build
 cd build
