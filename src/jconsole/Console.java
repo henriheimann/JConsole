@@ -1,5 +1,8 @@
 package jconsole;
 
+import java.io.File;
+import java.net.URISyntaxException;
+
 /**
  * This class provides platform-independent access to lowlevel console functions.
  *
@@ -12,11 +15,88 @@ package jconsole;
  */
 public final class Console
 {
-	// Load and initialize native library
 	static
 	{
-		System.loadLibrary("jconsole");
+		// First try loading using loadLibrary and then search the directory of the containing jar
+		if (!tryLoadingLibrary() && !tryLoadingLibraryDirect()) {
+			System.err.println("Unable to load native library for jconsole.");
+			System.exit(0);
+		}
+
+		// Initialize native library
 		initialize();
+	}
+
+	/**
+	 * Try to load the jconsole library using the System.loadLibrary method.
+	 * @return		true if loading succeeds, false if it doesn't
+	 */
+	private static boolean tryLoadingLibrary()
+	{
+		try {
+			System.loadLibrary("jconsole");
+			return true;
+		} catch (UnsatisfiedLinkError e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Try to search the directory of the containing jar and load the jconsole library.
+	 * @return		true if loading succeeds, false if it doesn't
+	 */
+	private static boolean tryLoadingLibraryDirect()
+	{
+		File jar = null;
+
+		try {
+			jar = new File(Console.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+		} catch (URISyntaxException e) {
+			return false;
+		}
+
+		File[] directory = jar.getParentFile().listFiles();
+
+		if (directory == null) {
+			return false;
+		}
+
+		for (File file : directory) {
+
+			String name = file.getName();
+
+			if (isWindows() && name.startsWith("jconsole") && name.endsWith("dll")) {
+				System.load(file.getAbsolutePath());
+				return true;
+			}
+
+			if (isLinux() && name.startsWith("libjconsole") && name.endsWith("so")) {
+				System.load(file.getAbsolutePath());
+				return true;
+			}
+
+			if (isMac() && name.startsWith("libjconsole") && name.endsWith("dylib")) {
+				System.load(file.getAbsolutePath());
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static boolean isWindows()
+	{
+		return (System.getProperty("os.name").toLowerCase().contains("win"));
+	}
+
+	private static boolean isLinux()
+	{
+		return (System.getProperty("os.name").toLowerCase().contains("nux"));
+	}
+
+	private static boolean isMac()
+	{
+		return (System.getProperty("os.name").toLowerCase().contains("mac"));
 	}
 
 	// Suppress instantiation of class
