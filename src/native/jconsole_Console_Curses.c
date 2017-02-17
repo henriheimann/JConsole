@@ -45,6 +45,36 @@ JNIEXPORT void JNICALL Java_jconsole_Console_moveCursor(JNIEnv *env, jclass clas
 
 JNIEXPORT jchar JNICALL Java_jconsole_Console_readCharacter(JNIEnv *env, jclass class)
 {
-	int c = wgetch(stdscr);
-	return c;
+    jchar result = '\0';
+
+    do {
+        int ch = getch();
+
+        // no special character
+        if (ch <= 255) {
+			result = (jchar)ch;
+
+        // special character, convert to unicode representation
+        } else {
+			switch (ch) {
+				case KEY_LEFT:
+					result = L'\u2190';
+					break;
+
+				case KEY_UP:
+					result = L'\u2191';
+					break;
+
+				case KEY_RIGHT:
+					result = L'\u2192';
+					break;
+
+				case KEY_DOWN:
+					result = L'\u2193';
+					break;
+			}
+        }
+    } while (result == '\0');
+
+	return result;
 }
