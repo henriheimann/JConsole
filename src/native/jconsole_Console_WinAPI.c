@@ -110,7 +110,7 @@ JNIEXPORT jchar JNICALL Java_jconsole_Console_readCharacter(JNIEnv *env, jclass 
             // TODO: Work with keyrec.wRepeatCount
 
             if (keyrec.bKeyDown) {
-                switch(eventBuffer[i].Event.KeyEvent.wVirtualKeyCode){
+                switch(keyrec.wVirtualKeyCode){
                     case VK_LEFT:
                         result = L'\u2190';
                         break;
@@ -127,8 +127,15 @@ JNIEXPORT jchar JNICALL Java_jconsole_Console_readCharacter(JNIEnv *env, jclass 
                         result = L'\u2193';
                         break;
 
+					case VK_ESCAPE:
+						result = L'\u241B';
+						break;
+
                     default:
-                        result = keyrec.uChar.UnicodeChar;
+						// only support ASCII for now
+						if (keyrec.uChar.UnicodeChar <= 127) {
+                        	result = keyrec.uChar.UnicodeChar;
+						}
                         break;
                 }
             }
