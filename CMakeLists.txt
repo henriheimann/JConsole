@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 project(jconsole)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
 
@@ -65,6 +66,12 @@ add_custom_target(
 # Build native library, make sure to update javadoc and jar as well
 add_library(jconsole SHARED ${SOURCE_FILES})
 add_dependencies(jconsole jconsole-javah jconsole-jar jconsole-javadoc)
+
+# Remove wrong lib prefix added by MinGW
+if (WIN32 AND NOT MSVC)
+	set_target_properties(jconsole PROPERTIES PREFIX "")
+	set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static")
+endif()
 
 include_directories(${JNI_INCLUDE_DIRS})
 target_link_libraries(jconsole ${JNI_LIBRARIES})
