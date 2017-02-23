@@ -91,11 +91,48 @@ JNIEXPORT void JNICALL Java_jconsole_Console_moveCursor(JNIEnv *env, jclass clas
 
 JNIEXPORT jchar JNICALL Java_jconsole_Console_readCharacter(JNIEnv *env, jclass class)
 {
-	char c = '\0';
-	DWORD cCharsRead;
+    jchar result = '\0';
 
-	WaitForSingleObject(hStdin, INFINITE);
-	ReadConsoleA(hStdin, &c, 1, &cCharsRead, NULL);
+    INPUT_RECORD inrec;
+    DWORD count;
 
-	return c;
+    do {
+
+        WaitForSingleObject(hStdin, INFINITE);
+        ReadConsoleInput(hStdin, &inrec, 1, &count);
+
+        if (inrec.EventType == KEY_EVENT) {
+
+            KEY_EVENT_RECORD keyrec = inrec.Event.KeyEvent;
+
+            // TODO: Work with keyrec.wRepeatCount
+
+            if (keyrec.bKeyDown) {
+                switch(eventBuffer[i].Event.KeyEvent.wVirtualKeyCode){
+                    case VK_LEFT:
+                        result = L'\u2190';
+                        break;
+
+                    case VK_UP:
+                        result = L'\u2191';
+                        break;
+
+                    case VK_RIGHT:
+                        result = L'\u2192';
+                        break;
+
+                    case VK_DOWN:
+                        result = L'\u2193';
+                        break;
+
+                    default:
+                        result = keyrec.uChar.UnicodeChar;
+                        break;
+                }
+            }
+        }
+
+    } while (result == '\0');
+
+	return result;
 }

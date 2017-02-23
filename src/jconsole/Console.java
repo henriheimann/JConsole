@@ -141,25 +141,25 @@ public final class Console
 	 */
 	public static native void moveCursor(int x, int y);
 
-    /**
-     * Unicode symbol returned when the left arrow pressed.
-     */
-    public static final char KEY_LEFT_ARROW = '\u2190';
+	/**
+	 * Unicode symbol returned when the left arrow pressed.
+	 */
+	public static final char KEY_LEFT_ARROW = '\u2190';
 
-    /**
-     * Unicode symbol returned when the up arrow pressed.
-     */
-    public static final char KEY_UP_ARROW = '\u2191';
+	/**
+	 * Unicode symbol returned when the up arrow pressed.
+	 */
+	public static final char KEY_UP_ARROW = '\u2191';
 
-    /**
-     * Unicode symbol returned when the right arrow pressed.
-     */
-    public static final char KEY_RIGHT_ARROW = '\u2192';
+	/**
+	 * Unicode symbol returned when the right arrow pressed.
+	 */
+	public static final char KEY_RIGHT_ARROW = '\u2192';
 
-    /**
-     * Unicode symbol returned when the down arrow pressed.
-     */
-    public static final char KEY_DOWN_ARROW = '\u2193';
+	/**
+	 * Unicode symbol returned when the down arrow pressed.
+	 */
+	public static final char KEY_DOWN_ARROW = '\u2193';
 
 	/**
 	 * Waits until a recognized key is pressed and returns the corresponding character
