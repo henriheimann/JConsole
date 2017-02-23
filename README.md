@@ -16,3 +16,11 @@ cd build
 cmake ..
 make
 ```
+
+## Test
+
+To perform a simple test of the library follow the steps outlined above to build the library and execute the following command afterwards:
+
+```
+make jconsole-run
+```
