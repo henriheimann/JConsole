@@ -6,12 +6,14 @@ HANDLE hStdout;
 HANDLE hStdin;
 
 DWORD initialConsoleMode;
+UINT initialConsoleOutputCP;
 
 JNIEXPORT void JNICALL Java_jconsole_Console_initialize(JNIEnv *env, jclass class)
 {
 	hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	hStdin = GetStdHandle(STD_INPUT_HANDLE);
 
+	initialConsoleOutputCP = GetConsoleOutputCP();
 	SetConsoleOutputCP(CP_UTF8);
 
 	GetConsoleMode(hStdin, &initialConsoleMode);
@@ -22,7 +24,7 @@ JNIEXPORT void JNICALL Java_jconsole_Console_initialize(JNIEnv *env, jclass clas
 
 JNIEXPORT void JNICALL Java_jconsole_Console_shutdown(JNIEnv *env, jclass class)
 {
-
+	SetConsoleOutputCP(initialConsoleOutputCP);
 	SetConsoleMode(hStdin, initialConsoleMode);
 }
 
