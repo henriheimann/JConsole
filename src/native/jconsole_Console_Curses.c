@@ -51,10 +51,10 @@ JNIEXPORT jchar JNICALL Java_jconsole_Console_readCharacter(JNIEnv *env, jclass 
         int ch = getch();
 
         // no special character
-        if (ch <= 255) {
+        if (ch <= 127) {
             result = (jchar) ch;
 
-            // special character, convert to unicode representation
+        // special character, convert to unicode representation
         } else {
             switch (ch) {
                 case KEY_LEFT:
