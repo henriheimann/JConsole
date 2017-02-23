@@ -8,6 +8,7 @@ JNIEXPORT void JNICALL Java_jconsole_Console_initialize(JNIEnv *env, jclass clas
 	keypad(stdscr, TRUE);
 	cbreak();
 	noecho();
+	set_escdelay(25);
 }
 
 JNIEXPORT void JNICALL Java_jconsole_Console_shutdown(JNIEnv *env, jclass class)
@@ -50,8 +51,22 @@ JNIEXPORT jchar JNICALL Java_jconsole_Console_readCharacter(JNIEnv *env, jclass 
     do {
         int ch = getch();
 
+		// esc or alt pressed
+		if (ch == 27) {
+
+			nodelay(stdscr, true);
+			ch = getch();
+			nodelay(stdscr, false);
+
+			// esc was pressed (ignore alt)
+			if (ch == ERR) {
+				result = L'\u241B';
+			} else {
+				result = (jchar)ch;
+			}
+
         // no special character
-        if (ch <= 127) {
+		} else if (ch <= 127) {
             result = (jchar) ch;
 
         // special character, convert to unicode representation

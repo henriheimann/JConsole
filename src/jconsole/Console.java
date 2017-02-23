@@ -162,6 +162,11 @@ public final class Console
 	public static final char KEY_DOWN_ARROW = '\u2193';
 
 	/**
+	 * Unicode symbol returned when the escape key was pressed.
+	 */
+	public static final char KEY_ESCAPE = '\u241B';
+
+	/**
 	 * Waits until a recognized key is pressed and returns the corresponding character
 	 * or a unicode symbol matching the special key.
 	 * @return          Character representation of the pressed key

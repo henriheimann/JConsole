@@ -18,7 +18,7 @@ public class ConsoleTest
 			Console.moveCursor(2, 2);
 			Console.print(c + ": " + (int)c);
 
-		} while (c != 'q');
+		} while (c != Console.KEY_ESCAPE);
 
 		Console.shutdown();
 	}
